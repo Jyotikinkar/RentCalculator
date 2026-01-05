@@ -4,17 +4,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Monthly Rent Calculator</title>
+
 <style>
-body { font-family: -apple-system, Arial, sans-serif; background:#f2f2f7; padding:16px; }
-.container { max-width:500px; margin:auto; background:#fff; padding:20px; border-radius:12px; }
-h2,h3{text-align:center;}
-label{display:block;margin-top:10px;font-weight:600;}
-input{width:100%;padding:8px;margin-top:4px;border-radius:6px;border:1px solid #ccc;}
-button{margin-top:20px;width:100%;padding:12px;font-size:16px;background:#007aff;color:#fff;border:none;border-radius:8px;}
-.result{margin-top:20px;padding:12px;background:#eef3ff;border-radius:8px;}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    background: #f2f2f7;
+    padding: 16px;
+}
+.container {
+    max-width: 500px;
+    margin: auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+}
+h2, h3 {
+    text-align: center;
+}
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+}
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background: #007aff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+.result {
+    margin-top: 20px;
+    padding: 12px;
+    background: #eef3ff;
+    border-radius: 8px;
+}
 </style>
 </head>
+
 <body>
+
 <div class="container">
 <h2>Monthly Rent Calculator</h2>
 
@@ -43,38 +82,42 @@ button{margin-top:20px;width:100%;padding:12px;font-size:16px;background:#007aff
 <label>Persons in Your Family</label>
 <input type="number" id="familyPersons">
 
-<button onclick="calculateRent()">Calculate</button>
+<button onclick="calculateRent()">Calculate Monthly Rent</button>
+
 <div class="result" id="output"></div>
 </div>
 
 <script>
-function calculateRent(){
-  var house = Number(document.getElementById("houseRent").value)||0;
+function calculateRent() {
 
-  var ep = Number(document.getElementById("elecPrev").value)||0;
-  var ec = Number(document.getElementById("elecCurr").value)||0;
-  var eunit = Number(document.getElementById("elecCost").value)||0;
-  var erent = (ec-ep)*eunit;
+    var houseRent = Number(document.getElementById("houseRent").value) || 0;
 
-  var wp = Number(document.getElementById("waterPrev").value)||0;
-  var wc = Number(document.getElementById("waterCurr").value)||0;
-  var wunit = Number(document.getElementById("waterCost").value)||0;
-  var totalWater = (wc-wp)*wunit;
+    var elecPrev = Number(document.getElementById("elecPrev").value) || 0;
+    var elecCurr = Number(document.getElementById("elecCurr").value) || 0;
+    var elecCost = Number(document.getElementById("elecCost").value) || 0;
+    var electricityRent = (elecCurr - elecPrev) * elecCost;
 
-  var persons = Number(document.getElementById("totalPersons").value)||1;
-  var waterPerPerson = totalWater/persons;
+    var waterPrev = Number(document.getElementById("waterPrev").value) || 0;
+    var waterCurr = Number(document.getElementById("waterCurr").value) || 0;
+    var waterCost = Number(document.getElementById("waterCost").value) || 0;
+    var totalWaterRent = (waterCurr - waterPrev) * waterCost;
 
-  var family = Number(document.getElementById("familyPersons").value)||0;
-  var familyWater = waterPerPerson*family;
+    var totalPersons = Number(document.getElementById("totalPersons").value) || 1;
+    var waterPerPerson = totalWaterRent / totalPersons;
 
-  var total = house+erent+familyWater;
+    var familyPersons = Number(document.getElementById("familyPersons").value) || 0;
+    var familyWaterRent = waterPerPerson * familyPersons;
 
-  document.getElementById("output").innerHTML =
-    "<b>Electricity Rent:</b> ₹"+erent.toFixed(2)+"<br>"+
-    "<b>Total Water Rent:</b> ₹"+totalWater.toFixed(2)+"<br>"+
-    "<b>Family Water Rent:</b> ₹"+familyWater.toFixed(2)+"<br><br>"+
-    "<b>Total Monthly Rent:</b> ₹"+total.toFixed(2);
+    var totalMonthlyRent = houseRent + electricityRent + familyWaterRent;
+
+    document.getElementById("output").innerHTML =
+        "<b>House Rent:</b> ₹" + houseRent.toFixed(2) + "<br>" +
+        "<b>Electricity Rent:</b> ₹" + electricityRent.toFixed(2) + "<br>" +
+        "<b>Total Water Rent:</b> ₹" + totalWaterRent.toFixed(2) + "<br>" +
+        "<b>Family Water Rent:</b> ₹" + familyWaterRent.toFixed(2) + "<br><br>" +
+        "<b>Total Monthly Rent:</b> ₹" + totalMonthlyRent.toFixed(2);
 }
 </script>
+
 </body>
 </html>

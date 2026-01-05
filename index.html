@@ -4,12 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Monthly Rent Calculator</title>
-<footer class="footer">
-    Powered by <strong>Jyotikinkar</strong>
-</footer>
 
 <style>
-/* ===== Page Background ===== */
+/* ===== BODY & BACKGROUND ===== */
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
@@ -24,17 +21,22 @@ body {
 
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-
     padding: 40px 16px;
-    overflow-y: auto;
 }
 
-/* ===== Main Card ===== */
+/* ===== APP WRAPPER ===== */
+.app-wrapper {
+    width: 100%;
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ===== CARD ===== */
 .container {
     width: 100%;
-    max-width: 520px;
-    background: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.96);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     padding: 24px;
@@ -42,7 +44,7 @@ body {
     box-shadow: 0 25px 50px rgba(0,0,0,0.35);
 }
 
-/* ===== Headings ===== */
+/* ===== HEADINGS ===== */
 h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -55,7 +57,7 @@ h3 {
     padding-bottom: 4px;
 }
 
-/* ===== Inputs ===== */
+/* ===== FORM ===== */
 label {
     display: block;
     margin-top: 12px;
@@ -71,7 +73,7 @@ input {
     font-size: 16px;
 }
 
-/* ===== Button ===== */
+/* ===== BUTTON ===== */
 button {
     margin-top: 24px;
     width: 100%;
@@ -82,9 +84,10 @@ button {
     color: white;
     border: none;
     border-radius: 12px;
+    cursor: pointer;
 }
 
-/* ===== Result ===== */
+/* ===== RESULT ===== */
 .result {
     margin-top: 24px;
     padding: 16px;
@@ -95,57 +98,25 @@ button {
     color: #222;
 }
 
-/* ===== Footer ===== */
+/* ===== FOOTER ===== */
 .footer {
-    margin-top: 24px;
-    text-align: center;
+    margin-top: 18px;
     font-size: 13px;
-    color: rgba(255,255,255,0.8);
-    padding: 12px 0;
-}
-
-/* If you want it always at the bottom of screen */
-@media (min-height: 700px) {
-    .footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: rgba(0,0,0,0.35);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-    }
-}
-
-/* Wrapper to stack everything properly */
-.app-wrapper {
+    color: rgba(255,255,255,0.9);
+    text-align: center;
     width: 100%;
-    max-width: 560px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
-/* Footer */
-.footer {
-    margin-top: 16px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.85);
-    text-align: center;
-}
-
-/* Disclaimer */
+/* ===== DISCLAIMER ===== */
 .disclaimer {
-    margin-top: 20px;
+    margin-top: 18px;
     padding: 14px;
     font-size: 12px;
     line-height: 1.6;
     color: rgba(255,255,255,0.75);
     text-align: center;
+    width: 100%;
 }
-
-
-
 </style>
 </head>
 
@@ -199,7 +170,6 @@ button {
     </div>
 
 </div>
-
 
 <script>
 function calculateRent() {

@@ -6,92 +6,183 @@
 <title>Monthly Rent Calculator</title>
 
 <style>
+/* 🔧 CRITICAL FIXES */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove number spinners (prevents overlap) */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 🌈 THEME VARIABLES */
+:root {
+  --primary:#6366f1;
+  --bg-gradient:linear-gradient(135deg,#5f6cff,#7b5bd6);
+  --card-bg:rgba(255,255,255,0.94);
+  --text:#111827;
+  --muted:#6b7280;
+  --input-bg:#ffffff;
+  --input-border:#d1d5db;
+  --result-bg:#f5f7ff;
+}
+
+/* 🌙 Dark Mode */
+body.dark {
+  --bg-gradient:linear-gradient(135deg,#0f172a,#020617);
+  --card-bg:rgba(15,23,42,0.94);
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --input-bg:#020617;
+  --input-border:#1f2937;
+  --result-bg:#020617;
+}
+
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-    min-height: 100vh;
-    background-image:
-        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
-        url("https://www.decorilla.com/online-decorating/wp-content/uploads/2021/05/Ideas-to-design-your-apartment-by-Decorilla-designer-Megan-W-scaled.jpg");
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    padding: 40px 16px;
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  min-height:100vh;
+  background:var(--bg-gradient);
+  display:flex;
+  justify-content:center;
+  padding:40px 16px;
+  color:var(--text);
 }
 
 .app-wrapper {
-    width: 100%;
-    max-width: 560px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width:100%;
+  max-width:560px;
 }
 
+/* 🧊 Glass Card */
 .container {
-    width: 100%;
-    background: rgba(255,255,255,0.96);
-    padding: 24px;
-    border-radius: 18px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+  background:var(--card-bg);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-radius:22px;
+  padding:28px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.25);
 }
 
+/* Header */
+.header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+}
 h2 {
-    text-align: center;
-    margin-bottom: 20px;
+  margin:0;
+  font-size:22px;
+  font-weight:700;
 }
-h3 {
-    margin-top: 24px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 4px;
+.toggle {
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:18px;
+  color:var(--text);
 }
 
+/* Sections */
+.section {
+  margin-top:26px;
+  padding-top:12px;
+  border-top:1px solid rgba(0,0,0,0.05);
+}
+body.dark .section {
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+
+.section-title {
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+
+/* Inputs */
 label {
-    margin-top: 12px;
-    display: block;
-    font-weight: 600;
+  font-size:14px;
+  font-weight:500;
+  color:var(--muted);
+  margin-bottom:6px;
+  display:block;
 }
 input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border-radius: 8px;
-    border: 1px solid #bbb;
-    font-size: 16px;
+  width:100%;
+  padding:13px 14px;
+  font-size:16px;
+  border-radius:14px;
+  border:1px solid var(--input-border);
+  background:var(--input-bg);
+  color:var(--text);
+  outline:none;
+  transition:0.2s;
+}
+input:focus {
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(99,102,241,0.25);
 }
 
-button {
-    margin-top: 24px;
-    width: 100%;
-    padding: 14px;
-    font-size: 17px;
-    font-weight: 600;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
+/* 🔲 PERFECT GRID (NO OVERLAP) */
+.grid-2 {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:12px;
+  width:100%;
 }
 
+/* Button */
+button.main-btn {
+  margin-top:32px;
+  width:100%;
+  padding:15px;
+  font-size:16px;
+  font-weight:700;
+  background:var(--primary);
+  color:white;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  box-shadow:0 12px 24px rgba(99,102,241,0.4);
+}
+button.main-btn:active {
+  transform:scale(0.98);
+}
+
+/* Result */
 .result {
-    margin-top: 24px;
-    padding: 16px;
-    background: #f4f6ff;
-    border-radius: 12px;
-    font-size: 15px;
+  margin-top:28px;
+  padding:20px;
+  border-radius:18px;
+  background:var(--result-bg);
+  font-size:15px;
+  line-height:1.7;
 }
 
+/* Footer */
 .footer {
-    margin-top: 16px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.9);
+  margin-top:18px;
+  text-align:center;
+  font-size:13px;
+  color:rgba(255,255,255,0.9);
 }
-
 .disclaimer {
-    margin-top: 16px;
-    font-size: 12px;
-    color: rgba(255,255,255,0.75);
-    text-align: center;
+  margin-top:12px;
+  font-size:12px;
+  text-align:center;
+  color:rgba(255,255,255,0.7);
 }
 </style>
 </head>
@@ -101,132 +192,146 @@ button {
 <div class="app-wrapper">
 
 <div class="container">
-<h2>🏠 Monthly Rent Calculator</h2>
+  <div class="header">
+    <h2>🏠 Monthly Rent Calculator</h2>
+    <button class="toggle" onclick="toggleDarkMode()">🌙</button>
+  </div>
 
-<h3>👤 Name</h3>
-<input type="text" id="name">  
+<div class="section">
+  <div class="section-title">Basic Info</div>
 
-<h3>💧 Water</h3>
-<label>Previous Reading</label>
-<input type="number" id="waterPrev">
-<label>Current Reading</label>
-<input type="number" id="waterCurr">
-<label>Cost per Unit</label>
-<input type="number" id="waterCost">
+  <label style="margin-top:10px;">📅 Rent Month</label>
+  <input type="month" id="rentMonth">
 
-<label>Total Persons</label>
-<input type="number" id="totalPersons">
+  <label>👤 Name</label>
+  <input type="text" id="name">
 
-<label>Persons in Family</label>
-<input type="number" id="familyPersons">
+</div>
 
-<div id="waterResult" style="margin-top:10px; font-weight:600;"></div>      
 
-<h3>🛏️ Room Rent</h3>
-<label>House Rent</label>
-<input type="number" id="houseRent">
+  <div class="section">
+    <div class="section-title">👥 Persons</div>
+    <label>Total Persons</label>
+    <input type="number" id="totalPersons">
+    <label style="margin-top:10px;">Persons in Family</label>
+    <input type="number" id="familyPersons">
+  </div>
 
-<h3>⚡ Electricity</h3>
-<label>Previous Reading</label>
-<input type="number" id="elecPrev">
-<label>Current Reading</label>
-<input type="number" id="elecCurr">
-<label>Cost per Unit</label>
-<input type="number" id="elecCost">  
 
-<button onclick="calculateRent()">Calculate & Save</button>
+  <div class="section">
+    <div class="section-title">🛏️ House Rent</div>
+    <input type="number" id="houseRent">
+  </div>
 
-<div class="result" id="output"></div>
+  <div class="section">
+    <div class="section-title">⚡ Electricity</div>
+    <div class="grid-2">
+      <div>
+        <label>Previous</label>
+        <input type="number" id="elecPrev">
+      </div>
+      <div>
+        <label>Current</label>
+        <input type="number" id="elecCurr">
+      </div>
+    </div>
+    <label style="margin-top:10px;">Cost per Unit</label>
+    <input type="number" id="elecCost">
+  </div>
+
+
+  <div class="section">
+    <div class="section-title">💧 Water</div>
+    <div class="grid-2">
+      <div>
+        <label>Previous</label>
+        <input type="number" id="waterPrev">
+      </div>
+      <div>
+        <label>Current</label>
+        <input type="number" id="waterCurr">
+      </div>
+    </div>
+    <label style="margin-top:10px;">Cost per Unit</label>
+    <input type="number" id="waterCost">
+    <div id="waterResult" style="margin-top:12px;font-weight:600;"></div>
+  </div>
+
+  <button class="main-btn" onclick="calculateRent()">Calculate & Save</button>
+  <div class="result" id="output"></div>
 </div>
 
 <div class="footer">Powered by <strong>Jyotikinkar</strong></div>
-
 <div class="disclaimer">
-By using this calculator, you agree that results are for informational purposes only.
+By using this calculator, results are informational only.<br>
 © 2025 Jyotikinkar. All rights reserved.
 </div>
 
 </div>
 
 <script>
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbz0JN2bSLzpV8agQxFu2QG2Vmk-sK3zY26WUC_HP-VWAF3g--q2SsMH38fWG1jVf9aB/exec";
 
-const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxV-Kt8OFl7_stEo3p9eoUi2hC3VotXNwMPhAMaVTx1qrqJFAKhDeZjvLOMd06ub8F4/exec";
+/* 🌙 Dark Mode Toggle */
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+  localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+}
+if (localStorage.getItem("darkMode") === "true") {
+  document.body.classList.add("dark");
+}
 
+/* 🧮 Calculator */
 function calculateRent() {
 
-    var name = document.getElementById("name").value || "";
-    var houseRent = Number(document.getElementById("houseRent").value) || 0;
+  var name = document.getElementById("name").value || "";
+  var rentMonth = document.getElementById("rentMonth").value || "";
+  var houseRent = Number(document.getElementById("houseRent").value) || 0;
 
-    var elecPrev = Number(document.getElementById("elecPrev").value) || 0;
-    var elecCurr = Number(document.getElementById("elecCurr").value) || 0;
-    var elecCost = Number(document.getElementById("elecCost").value) || 0;
-    var electricityRent = (elecCurr - elecPrev) * elecCost;
+  var elecPrev = Number(document.getElementById("elecPrev").value) || 0;
+  var elecCurr = Number(document.getElementById("elecCurr").value) || 0;
+  var elecCost = Number(document.getElementById("elecCost").value) || 0;
+  var electricityRent = (elecCurr - elecPrev) * elecCost;
 
-    var waterPrev = Number(document.getElementById("waterPrev").value) || 0;
-    var waterCurr = Number(document.getElementById("waterCurr").value) || 0;
-    var waterCost = Number(document.getElementById("waterCost").value) || 0;
-    var totalWaterRent = (waterCurr - waterPrev) * waterCost;
+  var totalPersons = Number(document.getElementById("totalPersons").value) || 1;
+  var familyPersons = Number(document.getElementById("familyPersons").value) || 0;
 
-    var totalPersons = Number(document.getElementById("totalPersons").value) || 1;
-    var familyPersons = Number(document.getElementById("familyPersons").value) || 0;
-    var familyWaterRent = (totalWaterRent / totalPersons) * familyPersons;
+  var waterPrev = Number(document.getElementById("waterPrev").value) || 0;
+  var waterCurr = Number(document.getElementById("waterCurr").value) || 0;
+  var waterCost = Number(document.getElementById("waterCost").value) || 0;
+  var totalWaterRent = (waterCurr - waterPrev) * waterCost;
 
-    document.getElementById("waterResult").innerHTML = "Total Water Rent: ₹" + totalWaterRent.toFixed(2);
-	
+  var familyWaterRent = (totalWaterRent / totalPersons) * familyPersons;
+  var totalMonthlyRent = houseRent + electricityRent + familyWaterRent;
 
-    var totalMonthlyRent = houseRent + electricityRent + familyWaterRent;
+  electricityRent = Math.round(electricityRent);
+  totalWaterRent = Math.round(totalWaterRent);
+  familyWaterRent = Math.round(familyWaterRent);
+  totalMonthlyRent = Math.round(totalMonthlyRent);
 
-	// 🔵 Round off all calculated values
-	electricityRent = Math.round(electricityRent);
-	totalWaterRent = Math.round(totalWaterRent);
-	familyWaterRent = Math.round(familyWaterRent);
-	totalMonthlyRent = Math.round(totalMonthlyRent);
+  document.getElementById("waterResult").innerHTML =
+    "<b>Total Water Rent:</b> ₹" + totalWaterRent;
 
+  document.getElementById("output").innerHTML =
+    "<b>Rent Month:</b> " + rentMonth + "<br><br>" +
+    "<b>Name:</b> " + name + "<br><br>" +
+    "<b>House Rent:</b> ₹" + houseRent + "<br>" +
+    "<b>Electricity Rent:</b> ₹" + electricityRent + "<br>" +
+    "<b>Family Water Rent:</b> ₹" + familyWaterRent + "<br><br>" +
+    "<b>Total Monthly Rent:</b> ₹" + totalMonthlyRent;
 
-    document.getElementById("output").innerHTML =
-        "<b>Name:</b> " + name + "<br><br>" +
-        "<b>House Rent:</b> ₹" + houseRent.toFixed(2) + "<br>" +
-        "<b>Electricity Rent:</b> ₹" + electricityRent.toFixed(2) + "<br>" +
-        "<b>Family Water Rent:</b> ₹" + familyWaterRent.toFixed(2) + "<br><br>" +
-        "<b>Total Monthly Rent:</b> ₹" + totalMonthlyRent.toFixed(2);
-
-    saveToGoogleSheet({
-    name: name,
-    houseRent: houseRent,
-
-    elecPrev: elecPrev,
-    elecCurr: elecCurr,
-    electricityRent: electricityRent,
-
-    waterPrev: waterPrev,
-    waterCurr: waterCurr,
-    totalWaterRent: totalWaterRent,
-
-    familyPersons: familyPersons,
-    familyWaterRent: familyWaterRent,
-    totalMonthlyRent: totalMonthlyRent
-});
-
-
-}
-
-function saveToGoogleSheet(data) {
-    fetch(GOOGLE_SHEET_URL, {
-        method: "POST",
-        mode: "no-cors",   // <-- IMPORTANT
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
+  fetch(GOOGLE_SHEET_URL, {
+    method:"POST",
+    mode:"no-cors",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({
+      rentMonth, name, houseRent,
+      elecPrev, elecCurr, electricityRent,
+      waterPrev, waterCurr, totalWaterRent,
+      familyPersons, familyWaterRent, totalMonthlyRent
     })
-    .then(() => {
-        alert("Saved to Google Sheets ✅");
-    })
-    .catch(() => {
-        alert("Failed to save ❌");
-    });
+  });
 }
-
 </script>
 
 </body>

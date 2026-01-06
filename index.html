@@ -176,6 +176,13 @@ function calculateRent() {
 
     var totalMonthlyRent = houseRent + electricityRent + familyWaterRent;
 
+	// 🔵 Round off all calculated values
+	electricityRent = Math.round(electricityRent);
+	totalWaterRent = Math.round(totalWaterRent);
+	familyWaterRent = Math.round(familyWaterRent);
+	totalMonthlyRent = Math.round(totalMonthlyRent);
+
+
     document.getElementById("output").innerHTML =
         "<b>Name:</b> " + name + "<br><br>" +
         "<b>House Rent:</b> ₹" + houseRent.toFixed(2) + "<br>" +

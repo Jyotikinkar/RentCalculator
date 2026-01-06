@@ -185,11 +185,16 @@ button.main-btn:active {
   color:rgba(255,255,255,0.7);
 }
 
-/* Fix month input alignment (iOS Safari issue) */
+/* iOS fix: make month input look like normal input */
 input[type="month"] {
-  text-align: left;
+  appearance: none;
   -webkit-appearance: none;
+  text-align: left;
+  height: 52px;
+  padding: 13px 14px;
+  line-height: normal;
 }
+
   
 </style>
 </head>

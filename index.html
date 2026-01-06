@@ -186,12 +186,20 @@ function calculateRent() {
 function saveToGoogleSheet(data) {
     fetch(GOOGLE_SHEET_URL, {
         method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" }
+        mode: "no-cors",   // <-- IMPORTANT
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
     })
-    .then(() => alert("Saved to Google Sheets ✅"))
-    .catch(() => alert("Failed to save ❌"));
+    .then(() => {
+        alert("Saved to Google Sheets ✅");
+    })
+    .catch(() => {
+        alert("Failed to save ❌");
+    });
 }
+
 </script>
 
 </body>

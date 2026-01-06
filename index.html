@@ -174,13 +174,14 @@ function calculateRent() {
         "<b>Total Monthly Rent:</b> ₹" + totalMonthlyRent.toFixed(2);
 
     saveToGoogleSheet({
-        houseRent,
-        electricityRent,
-        totalWaterRent,
-        familyPersons,
-        familyWaterRent,
-        totalMonthlyRent
-    });
+    houseRent: houseRent,
+    electricityRent: electricityRent,
+    totalWaterRent: totalWaterRent,
+    familyPersons: familyPersons,
+    familyWaterRent: familyWaterRent,
+    totalMonthlyRent: totalMonthlyRent
+});
+
 }
 
 function saveToGoogleSheet(data) {

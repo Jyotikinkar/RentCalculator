@@ -190,11 +190,31 @@ button.main-btn:active {
   text-align:center;
   color:rgba(255,255,255,0.7);
 }
-/* Fix month input alignment (iOS Safari issue) */
-input[type="month"] {
-  text-align: left;
-  -webkit-appearance: none;
+/* 🔒 iOS Safari FIX for month input shrinking */
+@supports (-webkit-touch-callout: none) {
+  input[type="month"] {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+
+    display: block;
+    width: 100%;
+
+    height: 52px !important;
+    min-height: 52px !important;
+
+    padding: 13px 14px !important;
+    line-height: 26px !important;
+
+    font-size: 16px !important;
+    text-align: left;
+
+    background: var(--input-bg);
+    color: var(--text);
+    border: 1px solid var(--input-border);
+    border-radius: 14px;
+  }
 }
+
 
 /* 🌄 BACKGROUND ROTATOR */
 .bg-rotator {
@@ -224,6 +244,14 @@ body.dark .bg-rotator::after {
   background: rgba(0,0,0,0.75);
 }
 
+/* 📅 Fix calendar icon visibility in dark mode */
+body.dark input[type="month"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+
 
 </style>
 </head>
@@ -242,7 +270,11 @@ body.dark .bg-rotator::after {
   <div class="section-title">Basic Info</div>
 
   <label style="margin-top:10px;">📅 Rent Month</label>
-  <input type="month" id="rentMonth">
+  <input type="month" id="rentMonth" ::-webkit-calendar-picker-indicator {
+  opacity: 0.6;
+}>
+  
+
 
   <label>👤 Name</label>
   <input type="text" id="name">

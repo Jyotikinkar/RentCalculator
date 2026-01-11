@@ -311,6 +311,48 @@ body.dark .container {
 body.dark .section {
   border-top: 1px solid rgba(255,255,255,0.08);
 }
+  
+  /* ==================================================
+   📅 CROSS-PLATFORM MONTH INPUT FIX (iOS + Android)
+   ================================================== */
+
+/* Base normalization for ALL platforms */
+input[type="month"] {
+  height: 48px;
+  min-height: 48px;
+  padding: 12px 14px;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 14px;
+}
+
+/* 🍎 iOS Safari override */
+@supports (-webkit-touch-callout: none) {
+  input[type="month"] {
+    appearance: none;
+    -webkit-appearance: none;
+
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 12px 14px !important;
+
+    font-size: 16px !important;
+    line-height: 24px !important;
+
+    /* remove iOS internal UI spacing */
+    background-clip: padding-box;
+  }
+
+  /* Normalize calendar icon */
+  input[type="month"]::-webkit-calendar-picker-indicator {
+    height: 18px;
+    width: 18px;
+    margin: 0;
+    padding: 0;
+    opacity: 0.6;
+  }
+}
+
 
   
 </style>

@@ -13,7 +13,7 @@
   box-sizing: border-box;
 }
 
-/* Remove number spinners (prevents overlap) */
+/* Remove number spinners */
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -62,7 +62,6 @@ body {
   color:var(--text);
 }
 
-
 .app-wrapper {
   width:100%;
   max-width:560px;
@@ -72,7 +71,6 @@ body {
 .container {
   background:var(--card-bg);
   backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
   border-radius:22px;
   padding:28px;
   box-shadow:0 30px 60px rgba(0,0,0,0.25);
@@ -133,23 +131,16 @@ input {
   border:1px solid var(--input-border);
   background:var(--input-bg);
   color:var(--text);
-  outline:none;
-  transition:0.2s;
-}
-input:focus {
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(99,102,241,0.25);
 }
 
-/* 🔲 PERFECT GRID (NO OVERLAP) */
+/* Grid */
 .grid-2 {
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:12px;
-  width:100%;
 }
 
-/* Button */
+/* Buttons */
 button.main-btn {
   margin-top:32px;
   width:100%;
@@ -161,10 +152,24 @@ button.main-btn {
   border:none;
   border-radius:16px;
   cursor:pointer;
-  box-shadow:0 12px 24px rgba(99,102,241,0.4);
 }
-button.main-btn:active {
-  transform:scale(0.98);
+
+button.reset-btn {
+  margin-top:14px;
+  width:100%;
+  padding:14px;
+  font-size:15px;
+  font-weight:600;
+  background:#a4bff6;
+  color:#111827;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+}
+
+body.dark button.reset-btn {
+  background:#1f2937;
+  color:#e5e7eb;
 }
 
 /* Result */
@@ -190,31 +195,6 @@ button.main-btn:active {
   text-align:center;
   color:rgba(255,255,255,0.7);
 }
-/* 🔒 iOS Safari FIX for month input shrinking */
-@supports (-webkit-touch-callout: none) {
-  input[type="month"] {
-    appearance: none !important;
-    -webkit-appearance: none !important;
-
-    display: block;
-    width: 100%;
-
-    height: 52px !important;
-    min-height: 52px !important;
-
-    padding: 13px 14px !important;
-    line-height: 26px !important;
-
-    font-size: 16px !important;
-    text-align: left;
-
-    background: var(--input-bg);
-    color: var(--text);
-    border: 1px solid var(--input-border);
-    border-radius: 14px;
-  }
-}
-
 
 /* 🌄 BACKGROUND ROTATOR */
 .bg-rotator {
@@ -223,132 +203,199 @@ button.main-btn:active {
   z-index: -2;
   background-size: cover;
   background-position: center;
-  transition: 
+  transition:
     background-image 1s ease-in-out,
     filter 1.2s ease-in-out,
     transform 12s linear;
-  filter: blur(0px);
-  transform: scale(1);
 }
 
-/* Dark overlay */
 .bg-rotator::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.55);
 }
 
-/* Dark mode overlay stronger */
 body.dark .bg-rotator::after {
-  background: rgba(0,0,0,0.75);
+  background:rgba(0,0,0,0.75);
 }
-
-/* 📅 Fix calendar icon visibility in dark mode */
-body.dark input[type="month"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-  opacity: 0.8;
-  cursor: pointer;
-}
-
-
-
 </style>
+
+<style>
+/* ===========================
+   🧊 GLASS UI ENHANCEMENTS
+   (Non-destructive overlay)
+   =========================== */
+
+/* Glass inputs */
+input {
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.35),
+    0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* Dark mode inputs */
+body.dark input {
+  background: rgba(15,23,42,0.55);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.08),
+    0 8px 22px rgba(0,0,0,0.6);
+}
+
+/* Glass buttons */
+button.main-btn,
+button.reset-btn {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.35),
+    0 14px 28px rgba(0,0,0,0.25);
+}
+
+/* Hover lift */
+button.main-btn:hover,
+button.reset-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Glass result box */
+.result {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.35),
+    0 20px 40px rgba(0,0,0,0.18);
+}
+
+/* Dark mode result */
+body.dark .result {
+  background: rgba(2,6,23,0.55);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,0.06),
+    0 20px 45px rgba(0,0,0,0.65);
+}
+
+/* ===============================
+   🧊 TRANSPARENT GLASS FORM
+   =============================== */
+
+/* Light mode glass */
+.container {
+  background: rgba(255, 255, 255, 0.72); /* ← transparency */
+  backdrop-filter: blur(.5px);
+  -webkit-backdrop-filter: blur(.5px);
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.25),
+    inset 0 1px 1px rgba(255,255,255,0.4);
+}
+
+/* Dark mode glass */
+body.dark .container {
+  background: rgba(15, 23, 42, 0.65); /* ← dark transparency */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(.5px);
+  box-shadow:
+    0 30px 70px rgba(0,0,0,0.65),
+    inset 0 1px 1px rgba(255,255,255,0.08);
+}
+
+/* Optional: soften section dividers */
+.section {
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+body.dark .section {
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+  
+</style>
+
 </head>
 
 <body>
 
 <div class="app-wrapper">
-
 <div class="container">
-  <div class="header">
-    <h2>🏠 Monthly Rent Calculator</h2>
-    <button class="toggle" onclick="toggleDarkMode()">🌙</button>
+
+<div class="header">
+  <h2>🏠 Monthly Rent Calculator</h2>
+  <button class="toggle" onclick="toggleDarkMode()">🌙</button>
+</div>
+
+<div class="section">
+  <div class="section-title">💧 Water</div>
+  <div class="grid-2">
+    <div>
+      <label>Previous</label>
+      <input type="number" id="waterPrev">
+    </div>
+    <div>
+      <label>Current</label>
+      <input type="number" id="waterCurr">
+    </div>
   </div>
+  <label>Cost per Unit</label>
+  <input type="number" id="waterCost">
+  <div id="waterResult" style="margin-top:12px;font-weight:600;"></div>
+</div>
 
 <div class="section">
   <div class="section-title">Basic Info</div>
-
-  <label style="margin-top:10px;">📅 Rent Month</label>
-  <input type="month" id="rentMonth" ::-webkit-calendar-picker-indicator {
-  opacity: 0.6;
-}>
-  
-
-
+  <label>📅 Rent Month</label>
+  <input type="month" id="rentMonth">
   <label>👤 Name</label>
   <input type="text" id="name">
-
 </div>
 
+<div class="section">
+  <div class="section-title">👥 Persons</div>
+  <label>Total Persons</label>
+  <input type="number" id="totalPersons">
+  <label>Persons in Family</label>
+  <input type="number" id="familyPersons">
+</div>
 
-  <div class="section">
-    <div class="section-title">👥 Persons</div>
-    <label>Total Persons</label>
-    <input type="number" id="totalPersons">
-    <label style="margin-top:10px;">Persons in Family</label>
-    <input type="number" id="familyPersons">
-  </div>
+<div class="section">
+  <div class="section-title">🛏️ House Rent</div>
+  <input type="number" id="houseRent">
+</div>
 
-
-  <div class="section">
-    <div class="section-title">🛏️ House Rent</div>
-    <input type="number" id="houseRent">
-  </div>
-
-  <div class="section">
-    <div class="section-title">⚡ Electricity</div>
-    <div class="grid-2">
-      <div>
-        <label>Previous</label>
-        <input type="number" id="elecPrev">
-      </div>
-      <div>
-        <label>Current</label>
-        <input type="number" id="elecCurr">
-      </div>
+<div class="section">
+  <div class="section-title">⚡ Electricity</div>
+  <div class="grid-2">
+    <div>
+      <label>Previous</label>
+      <input type="number" id="elecPrev">
     </div>
-    <label style="margin-top:10px;">Cost per Unit</label>
-    <input type="number" id="elecCost">
-  </div>
-
-
-  <div class="section">
-    <div class="section-title">💧 Water</div>
-    <div class="grid-2">
-      <div>
-        <label>Previous</label>
-        <input type="number" id="waterPrev">
-      </div>
-      <div>
-        <label>Current</label>
-        <input type="number" id="waterCurr">
-      </div>
+    <div>
+      <label>Current</label>
+      <input type="number" id="elecCurr">
     </div>
-    <label style="margin-top:10px;">Cost per Unit</label>
-    <input type="number" id="waterCost">
-    <div id="waterResult" style="margin-top:12px;font-weight:600;"></div>
   </div>
+  <label>Cost per Unit</label>
+  <input type="number" id="elecCost">
+</div>
 
-  <button class="main-btn" onclick="calculateRent()">Calculate & Save</button>
-  <div class="result" id="output"></div>
+<button class="main-btn" onclick="calculateRent()">Calculate & Save</button>
+<button class="reset-btn" onclick="resetAllExceptWater()">Reset</button>
+
+<div class="result" id="output"></div>
 </div>
 
 <div class="footer">Powered by <strong>Jyotikinkar</strong></div>
-<div class="disclaimer">
-By using this calculator, results are informational only.<br>
-© 2026 Jyotikinkar. All rights reserved.
-</div>
-
+<div class="disclaimer">© 2026 Jyotikinkar. All rights reserved.</div>
 </div>
 
 <div class="bg-rotator"></div>
 
-
 <script>
 const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbz0JN2bSLzpV8agQxFu2QG2Vmk-sK3zY26WUC_HP-VWAF3g--q2SsMH38fWG1jVf9aB/exec";
 
-/* 🌙 Dark Mode Toggle */
+/* 🌙 Dark Mode */
 function toggleDarkMode() {
   document.body.classList.toggle("dark");
   localStorage.setItem("darkMode", document.body.classList.contains("dark"));
@@ -357,9 +404,8 @@ if (localStorage.getItem("darkMode") === "true") {
   document.body.classList.add("dark");
 }
 
-/* 🧮 Calculator */
+/* 🧮 Calculator (UNCHANGED) */
 function calculateRent() {
-
   var name = document.getElementById("name").value || "";
   var rentMonth = document.getElementById("rentMonth").value || "";
   var houseRent = Number(document.getElementById("houseRent").value) || 0;
@@ -408,10 +454,19 @@ function calculateRent() {
     })
   });
 }
-</script>
 
-<script>
-/* 🌄 Rotating Background Images */
+/* 🔁 RESET (EXCEPT WATER) */
+function resetAllExceptWater() {
+  document.getElementById("name").value = "";
+  document.getElementById("familyPersons").value = "";
+  document.getElementById("houseRent").value = "";
+  document.getElementById("elecPrev").value = "";
+  document.getElementById("elecCurr").value = "";
+  document.getElementById("elecCost").value = "";
+  document.getElementById("output").innerHTML = "";
+}
+
+/* 🌄 Background Rotation (UNCHANGED) */
 const bgImages = [
   "https://www.decorilla.com/online-decorating/wp-content/uploads/2021/05/Ideas-to-design-your-apartment-by-Decorilla-designer-Megan-W-scaled.jpg",
   "https://images.unsplash.com/photo-1505691938895-1758d7feb511",
@@ -425,16 +480,14 @@ const bg = document.querySelector(".bg-rotator");
 function rotateBackground() {
   bg.style.filter = "blur(6px)";
   bg.style.transform = "scale(1.05)";
-
   setTimeout(() => {
     bg.style.backgroundImage = `url('${bgImages[bgIndex]}')`;
-    bg.style.filter = "blur(0px)";
+    bg.style.filter = "blur(0)";
     bg.style.transform = "scale(1)";
     bgIndex = (bgIndex + 1) % bgImages.length;
   }, 600);
 }
 
-/* Init */
 bg.style.backgroundImage = `url('${bgImages[0]}')`;
 setInterval(rotateBackground, 4000);
 </script>

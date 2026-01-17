@@ -370,7 +370,7 @@ input[type="month"] {
 </div>
   
   <div class="section-title">📅 Rent Month</div>
-  <input type="month" id="rentMonth" onchange="fetchPrevReadings()">
+  <input type="month" id="rentMonth">
 
 
 <div class="section">
@@ -450,21 +450,14 @@ if (localStorage.getItem("darkMode") === "true") {
 
   /* 🔄 FETCH PREVIOUS WATER & ELECTRICITY PREVIOUS */
 function fetchPrevReadings() {
-  var rentMonth = document.getElementById("rentMonth").value;
   var name = document.getElementById("name").value.trim();
+  if (!name) return;
 
-  if (!rentMonth || !name) return;
-
-  fetch(
-    GOOGLE_SHEET_URL +
-    "?rentMonth=" + encodeURIComponent(rentMonth) +
-    "&name=" + encodeURIComponent(name)
-  )
+  fetch(GOOGLE_SHEET_URL + "?name=" + encodeURIComponent(name))
     .then(res => res.json())
     .then(data => {
       if (!data.found) return;
 
-      // ✅ ONLY these two fields
       document.getElementById("waterPrev").value = data.waterPrev;
       document.getElementById("elecPrev").value = data.elecPrev;
     })

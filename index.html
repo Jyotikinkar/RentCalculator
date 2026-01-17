@@ -370,7 +370,7 @@ input[type="month"] {
 </div>
   
   <div class="section-title">📅 Rent Month</div>
-  <input type="month" id="rentMonth">
+  <input type="month" id="rentMonth" onchange="fetchPrevReadings()">
 
 
 <div class="section">
@@ -397,7 +397,7 @@ input[type="month"] {
   <div class="section-title">📋 Basic Info</div>
   
   <label>👤 Name</label>
-  <input type="text" id="name">
+  <input type="text" id="name" onblur="fetchPrevReadings()">
    <label>Persons in Family</label>
   <input type="number" id="familyPersons">
 </div>
@@ -446,6 +446,29 @@ function toggleDarkMode() {
 }
 if (localStorage.getItem("darkMode") === "true") {
   document.body.classList.add("dark");
+}
+
+  /* 🔄 FETCH PREVIOUS WATER & ELECTRICITY PREVIOUS */
+function fetchPrevReadings() {
+  var rentMonth = document.getElementById("rentMonth").value;
+  var name = document.getElementById("name").value.trim();
+
+  if (!rentMonth || !name) return;
+
+  fetch(
+    GOOGLE_SHEET_URL +
+    "?rentMonth=" + encodeURIComponent(rentMonth) +
+    "&name=" + encodeURIComponent(name)
+  )
+    .then(res => res.json())
+    .then(data => {
+      if (!data.found) return;
+
+      // ✅ ONLY these two fields
+      document.getElementById("waterPrev").value = data.waterPrev;
+      document.getElementById("elecPrev").value = data.elecPrev;
+    })
+    .catch(err => console.error(err));
 }
 
 /* 🧮 Calculator (UNCHANGED) */
